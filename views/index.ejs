@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= pageTitle %> </title>
+    <link rel="stylesheet" href="/css/all.css">
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+    <div class="card">
+        <h2 class="card__title">Todo Application</h2>
+        <div class="card__form">
+            <form method="post">
+                <input type="text" name="todoTitle" placeholder="Todo Name...">
+                <button type="submit"><i class="fas fa-plus"></i></button>
+            </form>
+        </div>
+        <div class="card__content">
+            <% if(todoList.length > 0){ %> 
+            <ul class="content__lists">
+                <% for(let todo of todoList){ %> 
+                <li class="content__list">
+                    <% if(todo.complete == true){ %> 
+                    <span class="list__title complete"><%= todo.title %> </span>
+                    <% }else{ %>
+                        <span class="list__title"><%= todo.title %> </span>
+                    <% } %>  
+                    <span class="list__button">
+                        <form action="/todo/delete" method="post">
+                            <input type="hidden" name="todoId" value="<%= todo._id %>">
+                            <button type="submit"><i class="fas fa-trash"></i></button>
+                        </form>
+                        <form action="/todo/complete" method="post">
+                            <input type="hidden" name="todoId" value="<%= todo._id %>">
+                            <% if(todo.complete == true){ %>
+                                <button type="submit" disabled><i class="fas fa-check-circle"></i></button>
+                            <% }else{ %>
+                                <button type="submit"><i class="fas fa-check-circle"></i></button>
+                            <% } %>   
+                        </form>
+                    </span>
+                </li>
+                <% } %> 
+            </ul>
+            <% }else{ %> 
+            <div class="alert">Todo Not Found <i class="fa-solid fa-triangle-exclamation"></i></div>
+            <% } %> 
+        </div>
+    </div>
+</body>
+
+</html>
